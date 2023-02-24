@@ -1,34 +1,53 @@
-#include<iostream>
-#include<cstdlib>
-#include<ctime>
-#include<iomanip>
+#include <iostream>
 using namespace std;
 
-void showData(double *,int,int);
+struct Rect
+{
+	double x, y, w, h;
+};
 
-void randData(double *,int,int);
+double overlap(Rect R1, Rect R2)
+{
+	if (R1.x + R1.w > R2.x and R1.y > R2.y - R2.h)
+	{
+		double X = R1.x + R1.w;
+		double Y = R2.y - R2.h;
+		cout << X << " " << Y << endl;
+		X = R2.x - X;
+		Y = Y - R1.y;
+		cout << X << " " << Y << endl;
+		double overlap = X * Y;
+		if (overlap > 0)
+		{
+			return overlap;
+		}
+		else
+		{
+			return 0;
+		}
+	}else {
+		double X = R1.x + R1.w;
+		double Y = R1.y - R2.h;
+		cout << X << " " << Y << endl;
+		X = R2.x - X;
+		Y = R2.y - Y;
+		cout << X << " " << Y << endl;
+		double overlap = X * Y;
+		if (overlap > 0)
+		{
+			return overlap;
+		}
+		else
+		{
+			return 0;
+		}	
+	}
+	return 0 ;
 
-void findRowSum(const double *,double *,int,int);
-
-void findColSum(const double *,double *,int,int);
-
-int main(){
-	srand(time(0));
-	const int N = 6, M = 8;
-	double data[N][M] = {};
-	double sum1[N] = {};
-	double sum2[M] = {};
-	double *dPtr = data[0];
-	randData(dPtr,N,M);
-	showData(dPtr,N,M);
-	
-	cout << "---------------------------------------------\n";
-	
-	findRowSum(dPtr,sum1,N,M);
-	showData(sum1,N,1);
-	
-	cout << "---------------------------------------------\n";
-	
-	findColSum(dPtr,sum2,N,M); 
-	showData(sum2,1,M);
+}
+int main()
+{
+	Rect R1 = {-1, 2, 6.9, 9.6};
+	Rect R2 = {0, 0, 1.2, 2.5};
+	cout << overlap(R1, R2);
 }
